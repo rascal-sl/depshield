@@ -1,0 +1,50 @@
+name: 'DepShield Scan'
+description: 'Smart Dependency Analyzer & Optimizer for Node.js projects'
+author: 'Tisankan'
+branding:
+  icon: 'shield'
+  color: 'blue'
+inputs:
+  path:
+    description: 'Path to the project root'
+    required: false
+    default: '.'
+  strict:
+    description: 'Fail the workflow if unused dependencies are found'
+    required: false
+    default: 'false'
+  audit:
+    description: 'Run security vulnerability audit'
+    required: false
+    default: 'false'
+  workspace:
+    description: 'Enable monorepo workspace scanning'
+    required: false
+    default: 'false'
+  json:
+    description: 'Output results in JSON format'
+    required: false
+    default: 'false'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install DepShield
+      run: npm install -g depshield
+      shell: bash
+
+    - name: Run DepShield Scan
+      run: |
+        ARGS=""
+        if [ "${{ inputs.strict }}" = "true" ]; then ARGS="$ARGS --strict"; fi
+        if [ "${{ inputs.audit }}" = "true" ]; then ARGS="$ARGS --audit"; fi
+        if [ "${{ inputs.workspace }}" = "true" ]; then ARGS="$ARGS --workspace"; fi
+        if [ "${{ inputs.json }}" = "true" ]; then ARGS="$ARGS --json"; fi
+        
+        depshield scan --path "${{ inputs.path }}" $ARGS
+      shell: bash

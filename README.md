@@ -104,6 +104,45 @@ depshield scan --json
 
 ---
 
+### 🛡️ Security Audit
+Check your project for known security vulnerabilities using the underlying `npm audit` or `pnpm audit` tools, but with a cleaner, summarized output.
+
+```bash
+# Run standalone audit
+depshield audit
+
+# Run audit alongside dependency scan
+depshield scan --audit
+```
+
+### 📦 Monorepo Support
+DepShield supports **npm workspaces** and **pnpm workspaces**. You can scan all packages in your monorepo in one go.
+
+```bash
+# Scan all workspace packages
+depshield scan --workspace
+```
+
+### 🤖 GitHub Action
+Integrate DepShield directly into your CI/CD pipeline using our official GitHub Action.
+
+```yaml
+# .github/workflows/depshield.yml
+name: DepShield Scan
+on: [push, pull_request]
+
+jobs:
+  depshield:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: rascal-sl/depshield@v1
+        with:
+          path: '.'
+          audit: true
+          strict: true # Fail build if issues found
+```
+
 ## 🎛️ Configuration
 
 Create a `depshield.config.json` in your project root:

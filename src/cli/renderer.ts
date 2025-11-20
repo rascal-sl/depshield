@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { AnalysisResult } from '../core/analyzer.js';
+import { AuditResult, Vulnerability } from '../core/auditor.js';
 import { PackageJson } from '../core/scanner.js';
 import { formatBytes } from '../utils/package-size.js';
 
@@ -95,7 +96,49 @@ export class Renderer {
         // Recommendation
         console.log(chalk.bold('\n💡 Recommendation:'));
         console.log(chalk.gray('  Review the unused dependencies above and remove them if not needed.'));
-        console.log(chalk.gray('  Run: npm uninstall <package-name>'));
+        console.log(chalk.dim('  Run: npm uninstall <package-name>'));
         console.log();
+    }
+
+    renderAudit(result: AuditResult): void {
+        console.log('\n' + chalk.bold.underline('🛡️  Security Audit Report') + '\n');
+
+        if (result.vulnerabilities.length === 0) {
+            console.log(chalk.green('  ✔ No known vulnerabilities found!'));
+            return;
+        }
+
+        const { metadata } = result;
+        console.log(chalk.bold('Summary:'));
+        console.log(`  Total Vulnerabilities: ${chalk.bold(metadata.vulnerabilities.total)}`);
+
+        if (metadata.vulnerabilities.critical > 0) console.log(chalk.red.bold(`  Critical: ${metadata.vulnerabilities.critical}`));
+        if (metadata.vulnerabilities.high > 0) console.log(chalk.red(`  High: ${metadata.vulnerabilities.high}`));
+        if (metadata.vulnerabilities.moderate > 0) console.log(chalk.yellow(`  Moderate: ${metadata.vulnerabilities.moderate}`));
+        if (metadata.vulnerabilities.low > 0) console.log(chalk.blue(`  Low: ${metadata.vulnerabilities.low}`));
+
+        console.log('\n' + chalk.bold('Details:'));
+
+        result.vulnerabilities.forEach((vuln) => {
+            const severityColor = this.getSeverityColor(vuln.severity);
+            console.log(chalk.dim('---------------------------------------------------'));
+            console.log(`${severityColor(vuln.severity.toUpperCase())} - ${chalk.bold(vuln.packageName)}`);
+            console.log(`  Title: ${vuln.title}`);
+            console.log(`  Vulnerable: ${vuln.vulnerableVersions}`);
+            if (vuln.url) console.log(`  More Info: ${chalk.blue.underline(vuln.url)}`);
+        });
+
+        console.log(chalk.dim('---------------------------------------------------'));
+        console.log(chalk.yellow('\n⚠️  Recommendation: Run `npm audit fix` to resolve automatically where possible.'));
+    }
+
+    private getSeverityColor(severity: string) {
+        switch (severity) {
+            case 'critical': return chalk.red.bold;
+            case 'high': return chalk.red;
+            case 'moderate': return chalk.yellow;
+            case 'low': return chalk.blue;
+            default: return chalk.white;
+        }
     }
 }
