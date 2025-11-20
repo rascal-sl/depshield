@@ -1,6 +1,6 @@
 {
   "name": "depshield",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Smart Dependency Analyzer & Optimizer - Find unused npm packages, reduce bundle size, and improve project health with AST-based detection.",
   "main": "dist/index.js",
   "type": "module",
