@@ -1,0 +1,12 @@
+{
+    "name": "test-project-with-unused-deps",
+    "version": "1.0.0",
+    "dependencies": {
+        "lodash": "^4.17.21",
+        "axios": "^1.6.0",
+        "express": "^4.18.2"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0"
+    }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "depshield",
+  "description": "Smart Dependency Analyzer & Optimizer for Node.js Projects",
+  "keywords": [
+    "dependency-analysis",
+    "unused-dependencies",
+    "package-optimization",
+    "node-js",
+    "typescript",
+    "cli-tool",
+    "performance-optimization",
+    "ci-cd",
+    "static-analysis",
+    "ast-parsing"
+  ],
+  "features": [
+    "Detects unused dependencies using AST parsing",
+    "Calculates package size and potential savings",
+    "Supports JavaScript and TypeScript",
+    "Configurable via depshield.config.json",
+    "JSON output for CI/CD integration"
+  ],
+  "usage": {
+    "install": "npm install -g depshield",
+    "scan": "depshield scan",
+    "scanPath": "depshield scan --path ./src",
+    "scanJson": "depshield scan --json"
+  },
+  "documentation": "https://github.com/rascal-sl/depshield/blob/main/README.md",
+  "repository": "https://github.com/rascal-sl/depshield",
+  "author": "Tisankan <contact@tisankan.dev>"
+}
