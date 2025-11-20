@@ -289,10 +289,10 @@ If DepShield has helped you, please:
 
 ## 📊 Stats
 
-![GitHub stars](https://img.shields.io/github/stars/depshield/cli?style=social)
-![GitHub forks](https://img.shields.io/github/forks/depshield/cli?style=social)
-![GitHub issues](https://img.shields.io/github/issues/depshield/cli)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/depshield/cli)
+![GitHub stars](https://img.shields.io/github/stars/rascal-sl/depshield?style=social)
+![GitHub forks](https://img.shields.io/github/forks/rascal-sl/depshield?style=social)
+![GitHub issues](https://img.shields.io/github/issues/rascal-sl/depshield)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/rascal-sl/depshield)
 
 ---
 
